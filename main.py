@@ -58,3 +58,4 @@ if __name__=="__main__":
 	test_acc = accuracy_score(test_label,test_pred,normalize=True)
 	print "train acc = ", train_acc
 	print "test acc = ", test_acc
+

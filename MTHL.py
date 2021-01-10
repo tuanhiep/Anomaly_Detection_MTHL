@@ -46,14 +46,14 @@ class MTHL(object):
 		self._convergence = config.convergence # convergence tolerance (set to 1e-8)
 		self._tolerance = config.tolerance # only if d >= r(1+tolerance) we can judge anomalous
 
-		self._V = len(self._X) # number of views
-		self._m = len(self._X[0]) # number of samples
-		self._T = self._X[0].shape[2] # timesteps
+		self._V = len(self._X) # number of views  Ex: 2
+		self._m = len(self._X[0]) # number of samples Ex: 50
+		self._T = self._X[0].shape[2] # timesteps Ex: 24
 		self._P = [] # a list of matrices for multiple views
 		self._Q = []
 		self._L = [] # view-specific feature numbers
 		for i in range(self._V):
-			self._L.append(self._X[i].shape[1]) # number of features for different views
+			self._L.append(self._X[i].shape[1]) # number of features for different views Ex: 100
 			P = np.random.rand(self._X[i].shape[1],self._p)
 			self._P.append(np.linalg.qr(P)[0])
 			Q = np.random.rand(self._T,self._q)
