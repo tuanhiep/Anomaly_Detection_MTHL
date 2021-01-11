@@ -25,7 +25,7 @@ def normalize(train_data, test_data):
 
 class Config(object):
     def __init__(self):
-        self.p = 5
+        self.p = 8
         # self.p = 32
         self.q = 5
         self.lambda1 = 0.12
@@ -50,8 +50,8 @@ if __name__ == "__main__":
     config = Config()
 
     # load data
-    train = cPickle.load(open("train.pkl", "rb"))
-    test = cPickle.load(open("test.pkl", "rb"))
+    train = cPickle.load(open("train_unix.pkl", "rb"))
+    test = cPickle.load(open("test_unix.pkl", "rb"))
     train_data, train_label = train["data"], train["label"]
     test_data, test_label = test["data"], test["label"]
 
