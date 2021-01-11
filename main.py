@@ -76,7 +76,7 @@ if __name__ == "__main__":
     print "test acc = ", test_acc
 
     # test with cryptojacking_attack data
-    nb_instances = 1000
+    nb_instances = 8085
     nb_time_steps = 10
     nb_views = 3
     dataset_name = "cryptojacking_attack"
@@ -100,11 +100,12 @@ if __name__ == "__main__":
         dim_views[i] = len(df_view.columns)
         normalized_df_view_numpy = scaler.fit_transform(df_view.head(nb_time_steps * nb_instances))
         normalized_df_view = pd.DataFrame(normalized_df_view_numpy)
-        if i==2:
-            fish_frame = normalized_df_view.iloc[:, :-1]
-            train_data_view_i = create_train_data(fish_frame, nb_time_steps)
-        else:
-            train_data_view_i = create_train_data(normalized_df_view, nb_time_steps)
+        # if i==2:
+        #     fish_frame = normalized_df_view.iloc[:, :-1]
+        #     train_data_view_i = create_train_data(fish_frame, nb_time_steps)
+        # else:
+        #     train_data_view_i = create_train_data(normalized_df_view, nb_time_steps)
+        train_data_view_i = create_train_data(normalized_df_view, nb_time_steps)
         df_views.append(train_data_view_i)
     # ground truth
     ground_truth = pd.read_csv(dataset_path + "/ground_truth.csv", header="infer")
