@@ -25,9 +25,10 @@ def normalize(train_data, test_data):
 
 class Config(object):
     def __init__(self):
-        self.p = 8
+        self.p = 5
         # self.p = 32
         self.q = 5
+        # self.q = 10
         self.lambda1 = 0.12
         self.lambda2 = 1.0
         self.gamma = 1e-3
@@ -50,8 +51,8 @@ if __name__ == "__main__":
     config = Config()
 
     # load data
-    train = cPickle.load(open("train_unix.pkl", "rb"))
-    test = cPickle.load(open("test_unix.pkl", "rb"))
+    train = cPickle.load(open("train.pkl", "rb"))
+    test = cPickle.load(open("test.pkl", "rb"))
     train_data, train_label = train["data"], train["label"]
     test_data, test_label = test["data"], test["label"]
 
@@ -76,7 +77,7 @@ if __name__ == "__main__":
     print "test acc = ", test_acc
 
     # test with cryptojacking_attack data
-    nb_instances = 8085
+    nb_instances = 600
     nb_time_steps = 10
     nb_views = 3
     dataset_name = "cryptojacking_attack"
@@ -100,11 +101,6 @@ if __name__ == "__main__":
         dim_views[i] = len(df_view.columns)
         normalized_df_view_numpy = scaler.fit_transform(df_view.head(nb_time_steps * nb_instances))
         normalized_df_view = pd.DataFrame(normalized_df_view_numpy)
-        # if i==2:
-        #     fish_frame = normalized_df_view.iloc[:, :-1]
-        #     train_data_view_i = create_train_data(fish_frame, nb_time_steps)
-        # else:
-        #     train_data_view_i = create_train_data(normalized_df_view, nb_time_steps)
         train_data_view_i = create_train_data(normalized_df_view, nb_time_steps)
         df_views.append(train_data_view_i)
     # ground truth
@@ -112,6 +108,7 @@ if __name__ == "__main__":
 
     # train_data is of dimension: nb_views x nb_instances x nb_features x nb_time_step
     train_data = df_views
+    # train_label = ground_truth["is_anomaly"].apply(lambda x: 1-x).head(nb_instances)
     train_label = ground_truth["is_anomaly"].head(nb_instances)
 
     # .....run TSHL ...... #
@@ -121,14 +118,16 @@ if __name__ == "__main__":
     end_time = time.time()
     print "it costs", float(end_time - start_time), "seconds."
 
-    # # predict test data
-    # train_score = tshl.predict(train_data, fg="score")
-    # auc = metrics.roc_auc_score(train_label, train_score)
-    # print "auc = ", auc
+    # predict test data
+    train_score = tshl.predict(train_data, fg="score")
+    # score= np.prod(train_score,axis=0)
+    score= np.sum(train_score,axis=0)
+    auc = metrics.roc_auc_score(train_label, score)
+    print "auc = ", auc
 
     # predict test data
-    train_pred = tshl.predict(train_data, fg="label")
-
-    train_acc = accuracy_score(train_label, train_pred, normalize=True)
-    print "train acc = ", train_acc
+    # train_pred = tshl.predict(train_data, fg="label")
+    #
+    # train_acc = accuracy_score(train_label, train_pred, normalize=True)
+    # print "train acc = ", train_acc
 
