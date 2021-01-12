@@ -145,6 +145,7 @@ if __name__ == "__main__":
     if check_done is True:
         print("already done for setting " + log_path)
     else:
+        print("Starting...")
         # load dataset
         df_views = []
         dim_views = [None] * nb_views
