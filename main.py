@@ -25,7 +25,7 @@ def normalize(train_data, test_data):
 
 class Config(object):
     def __init__(self):
-        self.p = 5
+        self.p = 3
         # self.p = 32
         self.q = 5
         # self.q = 10
@@ -51,8 +51,8 @@ if __name__ == "__main__":
     config = Config()
 
     # load data
-    train = cPickle.load(open("train.pkl", "rb"))
-    test = cPickle.load(open("test.pkl", "rb"))
+    train = cPickle.load(open("train_unix.pkl", "rb"))
+    test = cPickle.load(open("test_unix.pkl", "rb"))
     train_data, train_label = train["data"], train["label"]
     test_data, test_label = test["data"], test["label"]
 
@@ -77,7 +77,11 @@ if __name__ == "__main__":
     print "test acc = ", test_acc
 
     # test with cryptojacking_attack data
-    nb_instances = 600
+    nb_instances = 6
+    
+    
+    
+    000
     nb_time_steps = 10
     nb_views = 3
     dataset_name = "cryptojacking_attack"
@@ -85,7 +89,7 @@ if __name__ == "__main__":
     method = "method_2"
     # set up folder for loading data and save the result
     ready_data_directory = "./ready_data"
-    # load dataset
+    # load datasetu
     df_views = []
     dim_views = [None] * nb_views
     dataset_path = "{}/{}/anomaly_rate_{}_views_{}/{}".format(ready_data_directory, dataset_name, anomaly_rate,
