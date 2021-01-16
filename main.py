@@ -188,7 +188,8 @@ if __name__ == "__main__":
         score = np.sum(train_score, axis=0)
         auc = metrics.roc_auc_score(train_label, score)
         print(f"auc = {auc}")
-
+        with open(f"{log_path}/auc.txt", "w") as f:
+            f.write(f"{auc} \n")
         # Save tshl
         tshl_file = open(log_path + f"/tshl.pkl", 'ab')
         pickle.dump(tshl, tshl_file)
