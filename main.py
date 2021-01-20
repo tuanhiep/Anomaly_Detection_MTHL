@@ -140,7 +140,7 @@ if __name__ == "__main__":
                "_T_" + str(nb_time_steps) + "_" + method + \
                "_nb_instances_" + str(nb_instances) + \
                "_anomaly_rate_" + str(anomaly_rate) \
-               + "_test_" + str(index_test)
+               + "_view_" + str(nb_views) + "_test_" + str(index_test)
     check_done = prepare_directory(log_path)
     if check_done is True:
         print("already done for setting " + log_path)
